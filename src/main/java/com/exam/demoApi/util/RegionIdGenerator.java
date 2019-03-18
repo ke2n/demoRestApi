@@ -24,7 +24,7 @@ public class RegionIdGenerator implements IdentifierGenerator {
             ResultSet rs = statement.executeQuery("select count(ID) as Id from REGION");
 
             if (rs.next()) {
-                int id = 101;
+                int id = rs.getInt(1) + 101;
                 String generatedId = String.format("%s_%d", prefix, id);
                 System.out.println("Generated Id: " + generatedId);
                 return generatedId;
