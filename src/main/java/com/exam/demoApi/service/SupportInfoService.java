@@ -1,20 +1,21 @@
 package com.exam.demoApi.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.exam.demoApi.dao.RegionRepository;
-import com.exam.demoApi.dao.SupportInfoRepository;
 import com.exam.demoApi.domain.Region;
 import com.exam.demoApi.domain.ResultInfo;
 import com.exam.demoApi.domain.SupportInfo;
-import com.exam.demoApi.util.CsvUtils;
+import com.exam.demoApi.mapper.SupportMapper;
+import com.exam.demoApi.repository.RegionRepository;
+import com.exam.demoApi.repository.SupportInfoRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,36 +29,61 @@ public class SupportInfoService {
 
     private final RegionRepository regionRepository;
 
-    public SupportInfo add(SupportInfo supportInfo) {
-        return supportInfoRepository.save(supportInfo);
+    public ResultInfo add(ResultInfo resultInfo) {
+        SupportInfo supportInfo = SupportMapper.toSupportInfo(resultInfo);
+        return SupportMapper.toResultInfo(supportInfoRepository.save(supportInfo));
     }
 
-    public List<SupportInfo> addAll(MultipartFile file) {
-        List<ResultInfo> csvList = new ArrayList<>();
-        List<SupportInfo> resultList = new ArrayList<>();
-        try {
-            csvList = CsvUtils.read(ResultInfo.class, file.getInputStream());
-        } catch (IOException e) {
-            log.error("SupportInfoService.addAll IOException - {}", e.getMessage());
-        }
-
-        List<SupportInfo> convertList = CsvUtils.convertTo(csvList);
-
-        for (SupportInfo info : convertList) {
-            String regionName = Optional.ofNullable(info)
-                .map(SupportInfo::getRegion)
-                .map(Region::getRegionName)
-                .orElse(StringUtils.EMPTY);
-            int count = regionRepository.countByRegionCode(CsvUtils.getHashKey("region", regionName));
-            //if (count <= 0) {
-            resultList.add(supportInfoRepository.save(info));
-            //}
-        }
-
-        return resultList;
+    public List<ResultInfo> list() {
+        return SupportMapper.toResultInfoList(supportInfoRepository.findAll());
     }
 
-    public List<SupportInfo> list() {
-        return supportInfoRepository.findAll();
+    public ResultInfo search(ResultInfo resultInfo) {
+        Region region = regionRepository.findByRegionName(resultInfo.getRegion());
+        SupportInfo supportInfo = supportInfoRepository.findByRegion(region);
+        return SupportMapper.toResultInfo(supportInfo);
+    }
+
+    public ResultInfo edit(ResultInfo resultInfo) {
+        Region region = regionRepository.findByRegionName(resultInfo.getRegion());
+        SupportInfo supportInfo = supportInfoRepository.findByRegion(region);
+        supportInfo.setTarget(resultInfo.getTarget());
+        supportInfo.setUsage(resultInfo.getUsage());
+        supportInfo.setLimit(resultInfo.getLimit());
+        supportInfo.setRate(resultInfo.getRate());
+        supportInfo.setInstitute(resultInfo.getInstitute());
+        supportInfo.setMgmt(resultInfo.getMgmt());
+        supportInfo.setReception(resultInfo.getReception());
+
+        return SupportMapper.toResultInfo(supportInfoRepository.save(supportInfo));
+    }
+
+    public List<String> limits(Integer num) {
+        Sort sort = Sort.by(Sort.Order.desc("limitNum"), Sort.Order.asc("avgRate"));
+        Pageable pageable = PageRequest.of(0, num, sort);
+        Page<SupportInfo> infoPage = supportInfoRepository.findAll(pageable);
+
+//        for (SupportInfo info: infoPage.getContent()) {
+//            log.info("limits list - {}, {}, {}", info.getRegion(), info.getLimit(), info.getAvgRate());
+//        }
+        return SupportMapper.toResultInfoList(infoPage.getContent()).stream()
+            .map(ResultInfo::getRegion)
+            .collect(Collectors.toList());
+    }
+
+    public ResultInfo minRateInstitute() {
+        Sort sort = Sort.by(Sort.Order.asc("minRate"));
+        Pageable pageable = PageRequest.of(0, 1, sort);
+        Page<SupportInfo> infoPage = supportInfoRepository.findAll(pageable);
+
+//        for (SupportInfo info: infoPage.getContent()) {
+//            log.info("limits list - {}, {}, {}", info.getRegion(), info.getLimit(), info.getAvgRate());
+//        }
+
+        String institute = infoPage.getContent().stream()
+            .map(SupportInfo::getInstitute).findFirst().orElse(StringUtils.EMPTY);
+        return ResultInfo.builder()
+            .institute(institute)
+            .build();
     }
 }

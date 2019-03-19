@@ -43,7 +43,14 @@ public class SupportInfo {
     @Column(name = "limit_str")
     private String limit;
 
+    @Column(name = "limit_num")
+    private long limitNum;
+
     private String rate;
+
+    private Double avgRate;
+
+    private Double minRate;
 
     private String institute;
 

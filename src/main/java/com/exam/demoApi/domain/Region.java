@@ -19,7 +19,7 @@ public class Region {
 
     @Id
     @Column(name = "id")
-    @GenericGenerator(name = "sequence_region_id", strategy = "com.exam.demoApi.util.RegionIdGenerator")
+    @GenericGenerator(name = "sequence_region_id", strategy = "com.exam.demoApi.common.RegionIdGenerator")
     @GeneratedValue(generator = "sequence_region_id")
     private String regionCode;
 

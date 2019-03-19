@@ -1,4 +1,4 @@
-package com.exam.demoApi.dao;
+package com.exam.demoApi.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -6,5 +6,5 @@ import com.exam.demoApi.domain.Region;
 
 public interface RegionRepository extends JpaRepository<Region, Integer> {
 
-    int countByRegionCode(String id);
+    Region findByRegionName(String regionName);
 }
