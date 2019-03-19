@@ -1,6 +1,5 @@
 package com.exam.demoApi.service;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +23,8 @@ public class DataService {
     private final SupportInfoRepository supportInfoRepository;
 
     public List<ResultInfo> addAll(InputStream is) {
-        List<ResultInfo> csvList = new ArrayList<>();
+        List<ResultInfo> csvList = Utils.csvRead(ResultInfo.class, is);
         List<SupportInfo> resultList = new ArrayList<>();
-        try {
-            csvList = Utils.csvRead(ResultInfo.class, is);
-        } catch (IOException e) {
-            log.error("SupportInfoService.addAll IOException - {}", e.getMessage());
-        }
 
         List<SupportInfo> convertList = SupportMapper.toSupportInfoList(csvList);
 

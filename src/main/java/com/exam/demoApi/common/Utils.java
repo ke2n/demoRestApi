@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
@@ -21,14 +20,30 @@ public class Utils {
 
     private static CsvMapper mapper = new CsvMapper();
 
-    public static <T> List<T> csvRead(Class<T> clazz, InputStream stream) throws IOException {
+    public static <T> List<T> csvRead(Class<T> clazz, InputStream stream) {
+
+        if (clazz == null) {
+            return new ArrayList<>();
+        }
+
         CsvSchema schema = mapper.schemaFor(clazz).withHeader().withColumnReordering(true);
         ObjectReader reader = mapper.readerFor(clazz).with(schema);
-        return reader.<T>readValues(stream).readAll();
+
+        try {
+            return reader.<T>readValues(stream).readAll();
+        } catch (IOException e) {
+            log.error("Utils.csvRead IOException - {}", e.getMessage());
+        }
+
+        return new ArrayList<>();
     }
 
     public static long limitToNumberConverter(String limitStr) {
         long number = 0;
+        if (StringUtils.isEmpty(limitStr)) {
+            return number;
+        }
+
         try {
             number = Integer.parseInt(limitStr.replaceAll("\\D+", ""));
         } catch (NumberFormatException e) {
@@ -47,9 +62,14 @@ public class Utils {
     }
 
     private static List<Double> getDoubleList(String str) {
+        List<Double> resultList = new ArrayList<>();
+        if (StringUtils.isEmpty(str)) {
+            return resultList;
+        }
+
         Pattern p = Pattern.compile("\\d+(?:\\.\\d+)?");
         Matcher m = p.matcher(str);
-        List<Double> resultList = new ArrayList<>();
+
         while (m.find()) {
             double number = 0.0;
             try {
@@ -70,9 +90,9 @@ public class Utils {
 
     public static double convertMinRate(String rate) {
         List<Double> doubleList = getDoubleList(rate);
-        if (!CollectionUtils.isEmpty(doubleList)) {
-            return doubleList.get(0);
-        }
-        return Double.NaN;
+        return doubleList.stream()
+            .sorted()
+            .findFirst()
+            .orElse(Double.NaN);
     }
 }
