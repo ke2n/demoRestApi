@@ -71,6 +71,18 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
+    SupportInfoAssert hasLimitNum(long expectedLimitNum) {
+        isNotNull();
+
+        Long actualLimitNum = actual.getLimitNum();
+        assertThat(actualLimitNum)
+            .overridingErrorMessage("Expected limitNum to be <%s> but was <%s>",
+                expectedLimitNum, actualLimitNum
+            ).isEqualTo(expectedLimitNum);
+
+        return this;
+    }
+
     SupportInfoAssert hasRate(String expectedRate) {
         isNotNull();
 
@@ -79,6 +91,30 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
             .overridingErrorMessage("Expected rate to be <%s> but was <%s>",
                 expectedRate, actualRate
             ).isEqualTo(expectedRate);
+
+        return this;
+    }
+
+    SupportInfoAssert hasMinRate(Double expectedMinRate) {
+        isNotNull();
+
+        Double actualMinRate = actual.getMinRate();
+        assertThat(actualMinRate)
+            .overridingErrorMessage("Expected minRate to be <%s> but was <%s>",
+                expectedMinRate, actualMinRate
+            ).isEqualTo(expectedMinRate);
+
+        return this;
+    }
+
+    SupportInfoAssert hasAvgRate(Double expectedAvgRate) {
+        isNotNull();
+
+        Double actualAvgRate = actual.getAvgRate();
+        assertThat(actualAvgRate)
+            .overridingErrorMessage("Expected avgRate to be <%s> but was <%s>",
+                expectedAvgRate, actualAvgRate
+            ).isEqualTo(expectedAvgRate);
 
         return this;
     }
@@ -115,6 +151,17 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
             .overridingErrorMessage("Expected reception to be <%s> but was <%s>",
                 expectedReception, actualReception
             ).isEqualTo(expectedReception);
+
+        return this;
+    }
+
+    SupportInfoAssert hasNoId() {
+        isNotNull();
+
+        Integer actualSupportId = actual.getSupportId();
+        assertThat(actualSupportId)
+            .overridingErrorMessage("Expected region to be <null> but was <%s>", actualSupportId)
+            .isNull();
 
         return this;
     }

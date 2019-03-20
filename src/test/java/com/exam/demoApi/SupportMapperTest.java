@@ -27,7 +27,7 @@ public class SupportMapperTest {
     private static final String TARGET = "강릉시 소재 중소기업으로서 강릉시장이 추천한 자";
     private static final String USAGE = "운전";
     private static final String LIMIT = "추천금액 이내";
-    private static final String RATE = "3%";
+    private static final String RATE = "3%에서 5.00%";
     private static final String INSTITUTE = "강릉시";
     private static final String MGMT = "강릉지점";
     private static final String RECEPTION = "강릉시 소재 영업점";
@@ -188,7 +188,10 @@ public class SupportMapperTest {
                 .hasTarget(TARGET)
                 .hasUsage(USAGE)
                 .hasLimit(LIMIT)
+                .hasLimitNum(0)
                 .hasRate(RATE)
+                .hasMinRate(3.0)
+                .hasAvgRate(4.0)
                 .hasInstitute(INSTITUTE)
                 .hasMgmt(MGMT)
                 .hasReception(RECEPTION);
@@ -202,7 +205,10 @@ public class SupportMapperTest {
                 .hasTarget(TARGET)
                 .hasUsage(USAGE)
                 .hasLimit(LIMIT)
+                .hasLimitNum(0)
                 .hasRate(RATE)
+                .hasMinRate(3.0)
+                .hasAvgRate(4.0)
                 .hasInstitute(INSTITUTE)
                 .hasMgmt(MGMT)
                 .hasReception(RECEPTION);

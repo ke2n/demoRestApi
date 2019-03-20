@@ -34,7 +34,7 @@ public class UtilsTest {
         }
     }
 
-    public class CsvRead {
+    public class CsvRead_메서드_테스트 {
 
         @Test
         public void whenAllNullsValue() {
@@ -67,7 +67,7 @@ public class UtilsTest {
         }
     }
 
-    public class convertRate {
+    public class convertRate_메서드_테스트 {
 
         @Test
         public void whenNullValue() {
@@ -117,7 +117,7 @@ public class UtilsTest {
 
     }
 
-    public class limitToNumberConverter {
+    public class limitToNumberConverter_메서드_테스트 {
 
         @Test
         public void whenNullValue() {
@@ -150,9 +150,9 @@ public class UtilsTest {
         }
 
         @Test
-        public void whenIncludeMultipleNumberAndPostfixStringValue() {
-            long result = Utils.limitToNumberConverter("12억원, 100백만원");
-            Assert.assertEquals(result, 1200000000);
+        public void whenIncludeNumberAndPostfixStringValue2() {
+            long result = Utils.limitToNumberConverter("100백만원");
+            Assert.assertEquals(result, 100000000);
         }
 
     }

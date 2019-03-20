@@ -29,7 +29,7 @@ public class SupportInfo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     @JsonIgnore
-    private int supportId;
+    private Integer supportId;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "region_id")
@@ -44,7 +44,7 @@ public class SupportInfo {
     private String limit;
 
     @Column(name = "limit_num")
-    private long limitNum;
+    private Long limitNum;
 
     private String rate;
 

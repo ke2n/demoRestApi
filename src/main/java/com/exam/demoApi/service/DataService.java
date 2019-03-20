@@ -34,4 +34,8 @@ public class DataService {
 
         return SupportMapper.toResultInfoList(resultList);
     }
+
+    private void test() {
+
+    }
 }
