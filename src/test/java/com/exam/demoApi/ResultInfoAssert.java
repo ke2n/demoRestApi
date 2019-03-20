@@ -2,32 +2,31 @@ package com.exam.demoApi;
 
 import org.assertj.core.api.AbstractAssert;
 
-import com.exam.demoApi.domain.Region;
-import com.exam.demoApi.domain.SupportInfo;
+import com.exam.demoApi.domain.ResultInfo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This class provides a fluent API that can be used for writing assertions
- * to {@link com.exam.demoApi.domain.SupportInfo} objects.
+ * to {@link com.exam.demoApi.domain.ResultInfo} objects.
  *
  * @author yunsung Kim
  */
-final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportInfo> {
+final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo> {
 
-    private SupportInfoAssert(SupportInfo actual) {
-        super(actual, SupportInfoAssert.class);
+    private ResultInfoAssert(ResultInfo actual) {
+        super(actual, ResultInfoAssert.class);
     }
 
-    static SupportInfoAssert assertThatSupportInfoEntry(SupportInfo actual) {
-        return new SupportInfoAssert(actual);
+    static ResultInfoAssert assertThatResultInfoEntry(ResultInfo actual) {
+        return new ResultInfoAssert(actual);
     }
 
-    SupportInfoAssert hasRegion(String strRegion) {
+    ResultInfoAssert hasRegion(String expectedRegion) {
         isNotNull();
-        Region expectedRegion = new Region(strRegion);
-        Region actualRegion = actual.getRegion();
-        assertThat(expectedRegion)
+
+        String actualRegion = actual.getRegion();
+        assertThat(actualRegion)
             .overridingErrorMessage("Expected region to be <%s> but was <%s>",
                 expectedRegion, actualRegion
             ).isEqualTo(expectedRegion);
@@ -35,7 +34,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasTarget(String expectedTarget) {
+    ResultInfoAssert hasTarget(String expectedTarget) {
         isNotNull();
 
         String actualTarget = actual.getTarget();
@@ -47,7 +46,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasUsage(String expectedUsage) {
+    ResultInfoAssert hasUsage(String expectedUsage) {
         isNotNull();
 
         String actualUsage = actual.getUsage();
@@ -59,7 +58,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasLimit(String expectedLimit) {
+    ResultInfoAssert hasLimit(String expectedLimit) {
         isNotNull();
 
         String actualLimit = actual.getLimit();
@@ -71,7 +70,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasRate(String expectedRate) {
+    ResultInfoAssert hasRate(String expectedRate) {
         isNotNull();
 
         String actualRate = actual.getRate();
@@ -83,7 +82,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasInstitute(String expectedInstitute) {
+    ResultInfoAssert hasInstitute(String expectedInstitute) {
         isNotNull();
 
         String actualInstitute = actual.getInstitute();
@@ -95,7 +94,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasMgmt(String expectedMgmt) {
+    ResultInfoAssert hasMgmt(String expectedMgmt) {
         isNotNull();
 
         String actualMgmt = actual.getMgmt();
@@ -107,7 +106,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasReception(String expectedReception) {
+    ResultInfoAssert hasReception(String expectedReception) {
         isNotNull();
 
         String actualReception = actual.getReception();
@@ -119,18 +118,18 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasNoRegion() {
+    ResultInfoAssert hasNoRegion() {
         isNotNull();
 
-        Region actualRegion = actual.getRegion();
+        String actualRegion = actual.getRegion();
         assertThat(actualRegion)
             .overridingErrorMessage("Expected region to be <null> but was <%s>", actualRegion)
-            .isEqualTo(new Region());
+            .isNull();
 
         return this;
     }
 
-    SupportInfoAssert hasNoTarget() {
+    ResultInfoAssert hasNoTarget() {
         isNotNull();
 
         String actualTarget = actual.getTarget();
@@ -141,7 +140,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasNoUsage() {
+    ResultInfoAssert hasNoUsage() {
         isNotNull();
 
         String actualUsage = actual.getUsage();
@@ -152,7 +151,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasNoLimit() {
+    ResultInfoAssert hasNoLimit() {
         isNotNull();
 
         String actualLimit = actual.getLimit();
@@ -163,7 +162,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasNoRate() {
+    ResultInfoAssert hasNoRate() {
         isNotNull();
 
         String actualRate = actual.getRate();
@@ -174,7 +173,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasNoInstitute() {
+    ResultInfoAssert hasNoInstitute() {
         isNotNull();
 
         String actualInstitute = actual.getInstitute();
@@ -185,7 +184,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasNoMgmt() {
+    ResultInfoAssert hasNoMgmt() {
         isNotNull();
 
         String actualMgmt = actual.getMgmt();
@@ -196,7 +195,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert hasNoReception() {
+    ResultInfoAssert hasNoReception() {
         isNotNull();
 
         String actualReception = actual.getReception();
@@ -207,7 +206,7 @@ final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportI
         return this;
     }
 
-    SupportInfoAssert isAllEmptyValue() {
+    ResultInfoAssert isAllEmptyValue() {
         hasNoRegion();
         hasNoTarget();
         hasNoUsage();

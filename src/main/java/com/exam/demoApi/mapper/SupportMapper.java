@@ -1,6 +1,10 @@
 package com.exam.demoApi.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import org.springframework.util.CollectionUtils;
 
 import com.exam.demoApi.common.Utils;
 import com.exam.demoApi.domain.Region;
@@ -12,16 +16,22 @@ import static java.util.stream.Collectors.toList;
 public class SupportMapper {
 
     public static List<ResultInfo> toResultInfoList(List<SupportInfo> entities) {
+        if (CollectionUtils.isEmpty(entities)) {
+            return new ArrayList<>();
+        }
+
         return entities.stream()
             .map(SupportMapper::toResultInfo)
+            .filter(Objects::nonNull)
             .collect(toList());
     }
 
     public static ResultInfo toResultInfo(SupportInfo info) {
         if (info == null) {
-            return new ResultInfo();
+            return null;
         }
 
+        Region infoRegion = info.getRegion();
         return ResultInfo.builder()
             .institute(info.getInstitute())
             .limit(info.getLimit())
@@ -30,18 +40,25 @@ public class SupportMapper {
             .reception(info.getReception())
             .target(info.getTarget())
             .usage(info.getUsage())
-            .region(info.getRegion().getRegionName())
+            .region((infoRegion == null) ? null : infoRegion.getRegionName())
             .build();
     }
 
     public static List<SupportInfo> toSupportInfoList(List<ResultInfo> entities) {
+        if (CollectionUtils.isEmpty(entities)) {
+            return new ArrayList<>();
+        }
+
         return entities.stream()
             .map(SupportMapper::toSupportInfo)
+            .filter(Objects::nonNull)
             .collect(toList());
     }
 
     public static SupportInfo toSupportInfo(ResultInfo info) {
-        // TODO: info가 null일때 처리
+        if (info == null) {
+            return null;
+        }
 
         return SupportInfo.builder()
             .institute(info.getInstitute())

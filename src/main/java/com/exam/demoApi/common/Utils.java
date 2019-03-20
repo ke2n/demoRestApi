@@ -44,10 +44,15 @@ public class Utils {
             return number;
         }
 
-        try {
-            number = Integer.parseInt(limitStr.replaceAll("\\D+", ""));
-        } catch (NumberFormatException e) {
-            log.error("limitToNumberConverter NumberFormatException {} - {}", e.getMessage(), limitStr);
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher(limitStr);
+
+        if (m.find()) {
+            try {
+                number = Integer.parseInt(m.group());
+            } catch (NumberFormatException e) {
+                log.error("limitToNumberConverter NumberFormatException {} - {}", e.getMessage(), limitStr);
+            }
         }
 
         if (StringUtils.contains(limitStr, "억원")) {

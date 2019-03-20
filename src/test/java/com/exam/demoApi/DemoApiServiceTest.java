@@ -83,7 +83,6 @@ public class DemoApiServiceTest {
             verify(repository, times(1)).save(
                 assertArg(persisted -> assertThatSupportInfoEntry(persisted)
                     .hasInstitute(INSTITUTE)
-                    .hasNoId()
                 )
             );
             verifyNoMoreInteractions(repository);
