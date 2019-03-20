@@ -2,6 +2,7 @@ package com.exam.demoApi.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,13 +26,16 @@ public class DataController {
     private final DataService dataService;
 
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    public void uploadMultipart(@RequestParam("file") MultipartFile file) {
+    public List<ResultInfo> uploadMultipart(@RequestParam("file") MultipartFile file) {
+        List<ResultInfo> list = new ArrayList<>();
         try {
             InputStream is = file.getInputStream();
-            List<ResultInfo> list = dataService.addAll(is);
-            log.info("{}", list);
+            list = dataService.addAll(is);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        log.info("{}", list);
+
+        return list;
     }
 }

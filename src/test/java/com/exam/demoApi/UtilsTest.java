@@ -23,12 +23,15 @@ import com.nitorcreations.junit.runners.NestedRunner;
 public class UtilsTest {
 
     private final String CSV_PATH = "src/main/resources/test.csv";
+    private final String CSV_PATH_NO_UTF8 = "src/main/resources/test_no_utf8.csv";
     private InputStream fin;
+    private InputStream finNoUtf8;
 
     @Before
     public void setup() {
         try {
             fin = new FileInputStream(CSV_PATH);
+            finNoUtf8 = new FileInputStream(CSV_PATH_NO_UTF8);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,6 +61,13 @@ public class UtilsTest {
         public void whenStreamIOExceptionValue() {
             List resultList = Utils.csvRead(SupportInfo.class, null);
             Assert.assertEquals(resultList.size(), 0);
+        }
+
+        @Test
+        public void UTF8형식의_파일이_아닌경우() {
+            // TODO: 해당 case 작성 필요
+            List resultList = Utils.csvRead(ResultInfo.class, finNoUtf8);
+            Assert.assertFalse(CollectionUtils.isEmpty(resultList));
         }
 
         @Test
