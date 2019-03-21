@@ -1,5 +1,7 @@
 package com.exam.demoApi.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +22,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private static String REALM = "CRM_REALM";
 
-//    @Autowired
-//    private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
     @Autowired
     private TokenStore tokenStore;
@@ -45,22 +47,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Value("${access_token.validity_period:3600}")
     private int accessTokenValiditySeconds = 3600;
 
-//    @Override
-//    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-//        clients.jdbc(dataSource);
-//    }
-
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-            .withClient("crmuser")
-            .authorizedGrantTypes("password")
-            .authorities("ROLE_USER")
-            .scopes("read", "write")
-            .resourceIds(resourceId)
-            .accessTokenValiditySeconds(accessTokenValiditySeconds)
-            .secret("crmpass");
+        clients.jdbc(dataSource);
     }
+
+//    @Override
+//    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+//        clients.inMemory()
+//            .withClient("crmuser")
+//            .authorizedGrantTypes("password")
+//            .authorities("ROLE_USER")
+//            .scopes("read", "write")
+//            .resourceIds(resourceId)
+//            .accessTokenValiditySeconds(accessTokenValiditySeconds)
+//            .secret("crmpass");
+//    }
 
 	/*
 	@Override

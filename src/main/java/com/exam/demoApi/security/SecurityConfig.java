@@ -1,8 +1,12 @@
 package com.exam.demoApi.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,8 +20,8 @@ import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,8 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//	@Autowired
-//	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
     @Autowired
     private ClientDetailsService clientDetailsService;
@@ -35,24 +39,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CrmUserDetailsService crmUserDetailsService;
 
-//    @Override
-//    @Order(Ordered.HIGHEST_PRECEDENCE)
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//            .authorizeRequests()
-//            .antMatchers("/h2").permitAll()
-//            .antMatchers("/oauth/token").anonymous()
-//            .antMatchers("/info/**").authenticated()
-//            .and()
-//            .httpBasic()
-//            .realmName("CRM_REALM");
-//    }
-
     @Override
-    public void configure(HttpSecurity http) throws Exception {
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/info/**").hasRole("USER");
+            .antMatchers("/h2/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .csrf().disable()
+            .headers()
+            .frameOptions().disable()
+            .and()
+            .authorizeRequests()
+            .antMatchers("/oauth/**").permitAll()
+            .antMatchers("/info/**").authenticated();
     }
+
+//    @Override
+//    public void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//            .antMatchers("/h2/**").permitAll()
+//            .anyRequest().authenticated()
+//            .and()
+//            .csrf().disable()
+//            .headers()
+//            .frameOptions().disable()
+//
+//            .and()
+//            .authorizeRequests()
+//            .antMatchers("/info/**").hasRole("USER");
+//    }
 
 
     @Override
@@ -79,8 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //-- use the JwtTokenStore instead of JdbcTokenStore
     @Bean
     public TokenStore tokenStore() {
-        //return new JdbcTokenStore(dataSource);
-        return new JwtTokenStore(jwtTokenEnhancer());
+        return new JdbcTokenStore(dataSource);
     }
 
     @Bean
