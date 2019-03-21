@@ -1,0 +1,63 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+# 지자체 협약 지원 API 테스트
+# @author : yunsung Kim
+# @since : 2019.03.25
+
+
+### CSV레코드를_데이터베이스에_저장
+POST http://localhost:8080/data/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="test.csv"
+
+< ./test.csv
+--WebAppBoundary--
+
+
+
+### 지자체정보_목록출력
+GET http://localhost:8080/info/list
+Accept: application/json
+
+
+
+### 지자체정보_검색
+POST http://localhost:8080/info/search
+Content-Type: application/json
+
+{
+  "region": "강릉시"
+}
+
+
+### 지자체정보_수정
+POST http://localhost:8080/info/edit
+Content-Type: application/json
+
+{
+  "region": "강릉시",
+  "target": "대상 수정",
+  "limit": "300억원이내",
+  "rate": "4.005% 에서 100%",
+  "usage": "운전 수정"
+}
+
+
+### 지원금액으로_내림차순_정렬_출력
+GET http://localhost:8080/info/limits/10
+Content-Type: application/json
+
+
+
+### 이차보전비율이_가장_작은_추천기관_출력
+GET http://localhost:8080/info/min-rate-institute
+Content-Type: application/json
+
+###
