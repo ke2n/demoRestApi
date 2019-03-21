@@ -1,8 +1,4 @@
 /*
- * Copyright (c) 2019. 3. 5.
- * Yunsung Kim
- */
-
 package com.exam.demoApi;
 
 import java.io.FileInputStream;
@@ -28,6 +24,11 @@ import com.exam.demoApi.service.SupportInfoService;
 import lombok.extern.slf4j.Slf4j;
 
 import static org.junit.Assert.assertFalse;
+
+*/
+/**
+ * @author yunsung Kim
+ *//*
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -78,3 +79,4 @@ public class DemoApiServiceTests {
         log.info("{}", resultInfo);
     }
 }
+*/

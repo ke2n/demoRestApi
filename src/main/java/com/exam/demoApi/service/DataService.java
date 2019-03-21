@@ -7,14 +7,17 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.exam.demoApi.common.Utils;
-import com.exam.demoApi.domain.ResultInfo;
 import com.exam.demoApi.domain.SupportInfo;
 import com.exam.demoApi.mapper.SupportMapper;
+import com.exam.demoApi.model.ResultInfo;
 import com.exam.demoApi.repository.SupportInfoRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author yunsung Kim
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor

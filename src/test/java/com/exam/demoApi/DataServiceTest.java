@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.util.CollectionUtils;
 
 import com.exam.demoApi.common.Utils;
-import com.exam.demoApi.domain.ResultInfo;
+import com.exam.demoApi.model.ResultInfo;
 import com.exam.demoApi.repository.SupportInfoRepository;
 import com.exam.demoApi.service.DataService;
 import com.nitorcreations.junit.runners.NestedRunner;
@@ -25,6 +25,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
+ * {@link DataService}에 대한 단위 테스트
+ *
  * @author yunsung Kim
  */
 @RunWith(NestedRunner.class)

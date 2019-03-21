@@ -11,6 +11,9 @@ import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author yunsung Kim
+ */
 @Data
 @Entity
 @Table(name = "REGION")

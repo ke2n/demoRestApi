@@ -13,6 +13,9 @@ import org.hibernate.id.IdentifierGenerator;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author yunsung Kim
+ */
 @Slf4j
 public class RegionIdGenerator implements IdentifierGenerator {
 

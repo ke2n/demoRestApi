@@ -2,14 +2,12 @@ package com.exam.demoApi;
 
 import org.assertj.core.api.AbstractAssert;
 
-import com.exam.demoApi.domain.ResultInfo;
+import com.exam.demoApi.model.ResultInfo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * This class provides a fluent API that can be used for writing assertions
- * to {@link com.exam.demoApi.domain.ResultInfo} objects.
- *
+ * {@link ResultInfo}에 대한 assert 조건 정의
  * @author yunsung Kim
  */
 final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo> {

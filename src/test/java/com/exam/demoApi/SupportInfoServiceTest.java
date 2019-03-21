@@ -13,9 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.util.CollectionUtils;
 
 import com.exam.demoApi.domain.Region;
-import com.exam.demoApi.domain.ResultInfo;
 import com.exam.demoApi.domain.SupportInfo;
 import com.exam.demoApi.exception.CustomException;
+import com.exam.demoApi.model.ResultInfo;
 import com.exam.demoApi.repository.RegionRepository;
 import com.exam.demoApi.repository.SupportInfoRepository;
 import com.exam.demoApi.service.SupportInfoService;
@@ -39,6 +39,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
+ * {@link SupportInfoService}에 대한 단위 테스트
  * @author yunsung Kim
  */
 @RunWith(NestedRunner.class)

@@ -8,11 +8,14 @@ import org.springframework.util.CollectionUtils;
 
 import com.exam.demoApi.common.Utils;
 import com.exam.demoApi.domain.Region;
-import com.exam.demoApi.domain.ResultInfo;
 import com.exam.demoApi.domain.SupportInfo;
+import com.exam.demoApi.model.ResultInfo;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * @author yunsung Kim
+ */
 public class SupportMapper {
 
     public static List<ResultInfo> toResultInfoList(List<SupportInfo> entities) {

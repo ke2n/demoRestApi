@@ -8,9 +8,7 @@ import com.exam.demoApi.domain.SupportInfo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * This class provides a fluent API that can be used for writing assertions
- * to {@link com.exam.demoApi.domain.SupportInfo} objects.
- *
+ * {@link SupportInfo}에 대한 assert 조건 정의
  * @author yunsung Kim
  */
 final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportInfo> {

@@ -11,15 +11,20 @@ import org.junit.runner.RunWith;
 import org.springframework.util.CollectionUtils;
 
 import com.exam.demoApi.common.Utils;
-import com.exam.demoApi.domain.ResultInfo;
 import com.exam.demoApi.domain.SupportInfo;
+import com.exam.demoApi.exception.CustomException;
+import com.exam.demoApi.model.ResultInfo;
 import com.nitorcreations.junit.runners.NestedRunner;
 
+import static com.exam.demoApi.exception.ExceptionCode.CANNOT_CONVERT_FILE;
+import static com.exam.demoApi.exception.ExceptionCode.ONLY_SUPPORT_UTF8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
+ * {@link Utils}에 대한 단위 테스트
  * @author yunsung Kim
  */
 @RunWith(NestedRunner.class)
@@ -61,16 +66,19 @@ public class UtilsTest {
         }
 
         @Test
-        public void whenStreamIOExceptionValue() {
-            List resultList = Utils.csvRead(SupportInfo.class, null);
-            assertEquals(resultList.size(), 0);
+        public void 원하는CLASS와_형식이_달라_컨버팅_실패() {
+            Throwable thrown = catchThrowable(() -> Utils.csvRead(SupportInfo.class, fin));
+
+            assertThat(thrown).isExactlyInstanceOf(CustomException.class);
+            assertThat(((CustomException) thrown).getResultCode()).isEqualTo(CANNOT_CONVERT_FILE);
         }
 
         @Test
         public void UTF8형식의_파일이_아닌경우() {
-            // TODO: 해당 case 작성 필요
-            List resultList = Utils.csvRead(ResultInfo.class, finNoUtf8);
-            assertTrue(CollectionUtils.isEmpty(resultList));
+            Throwable thrown = catchThrowable(() -> Utils.csvRead(ResultInfo.class, finNoUtf8));
+
+            assertThat(thrown).isExactlyInstanceOf(CustomException.class);
+            assertThat(((CustomException) thrown).getResultCode()).isEqualTo(ONLY_SUPPORT_UTF8);
         }
 
         @Test
@@ -98,6 +106,11 @@ public class UtilsTest {
 
             double result2 = Utils.convertMinRate("");
             assertEquals(result2, Double.NaN, 0.0);
+        }
+
+        @Test
+        public void NumberFormatException_발생의_경우() {
+            // TODO: find Case
         }
 
         @Test
@@ -141,6 +154,12 @@ public class UtilsTest {
         @Test
         public void 빈스트링값_일때() {
             long result = Utils.limitToNumberConverter("");
+            assertEquals(result, 0);
+        }
+
+        @Test
+        public void NumberFormatException_발생의_경우() {
+            long result = Utils.limitToNumberConverter("100000000000AAAA");
             assertEquals(result, 0);
         }
 

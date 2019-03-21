@@ -1,4 +1,4 @@
-package com.exam.demoApi.domain;
+package com.exam.demoApi.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author yunsung Kim
+ */
 @Data
 @Builder
 @AllArgsConstructor

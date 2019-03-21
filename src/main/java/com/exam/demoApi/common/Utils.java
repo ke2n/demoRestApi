@@ -1,5 +1,6 @@
 package com.exam.demoApi.common;
 
+import java.io.CharConversionException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -9,12 +10,20 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.exam.demoApi.exception.CustomException;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 import lombok.extern.slf4j.Slf4j;
 
+import static com.exam.demoApi.exception.ExceptionCode.CANNOT_CONVERT_FILE;
+import static com.exam.demoApi.exception.ExceptionCode.ONLY_SUPPORT_UTF8;
+
+/**
+ * @author yunsung Kim
+ */
 @Slf4j
 public class Utils {
 
@@ -31,6 +40,10 @@ public class Utils {
 
         try {
             return reader.<T>readValues(stream).readAll();
+        } catch (CharConversionException e) {
+            throw new CustomException(ONLY_SUPPORT_UTF8);
+        } catch (UnrecognizedPropertyException e) {
+            throw new CustomException(CANNOT_CONVERT_FILE, e.getMessage());
         } catch (IOException e) {
             log.error("Utils.csvRead IOException - {}", e.getMessage());
         }

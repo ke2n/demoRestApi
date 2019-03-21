@@ -9,15 +9,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.exam.demoApi.domain.Region;
-import com.exam.demoApi.domain.ResultInfo;
 import com.exam.demoApi.domain.SupportInfo;
 import com.exam.demoApi.mapper.SupportMapper;
+import com.exam.demoApi.model.ResultInfo;
 import com.nitorcreations.junit.runners.NestedRunner;
 
 import static com.exam.demoApi.ResultInfoAssert.assertThatResultInfoEntry;
 import static com.exam.demoApi.SupportInfoAssert.assertThatSupportInfoEntry;
 
 /**
+ * {@link SupportMapper}에 대한 단위 테스트
  * @author yunsung Kim
  */
 @RunWith(NestedRunner.class)
@@ -85,23 +86,23 @@ public class SupportMapperTest {
             .build();
     }
 
-    public class toResultInfo {
+    public class toResultInfo메서드_테스트 {
 
         @Test
-        public void whenNullValue() {
+        public void Null일_경우() {
             ResultInfo result = SupportMapper.toResultInfo(null);
             Assert.assertNull(result);
         }
 
         @Test
-        public void whenEmptyValue() {
+        public void EmptyValue일_경우() {
             ResultInfo result = SupportMapper.toResultInfo(emptySupportInfo);
             assertThatResultInfoEntry(result)
                 .isAllEmptyValue();
         }
 
         @Test
-        public void whenRegionIsNullValue() {
+        public void Region값이_Null일_경우() {
             ResultInfo result = SupportMapper.toResultInfo(regionIsNullSupportInfo);
             assertThatResultInfoEntry(result)
                 .hasNoRegion()
@@ -115,7 +116,7 @@ public class SupportMapperTest {
         }
 
         @Test
-        public void whenNormalValue() {
+        public void 정상의_경우() {
             ResultInfo result = SupportMapper.toResultInfo(normalSupportInfo);
             assertThatResultInfoEntry(result)
                 .hasRegion(REGION)
@@ -129,23 +130,22 @@ public class SupportMapperTest {
         }
     }
 
-
-    public class toResultInfoList {
+    public class toResultInfoList메서드_테스트 {
 
         @Test
-        public void whenNullValue() {
+        public void Null일_경우() {
             List<ResultInfo> resultList = SupportMapper.toResultInfoList(null);
             Assert.assertEquals(resultList.size(), 0);
         }
 
         @Test
-        public void whenEmptyListValue() {
+        public void EmptyList일_경우() {
             List<ResultInfo> resultList = SupportMapper.toResultInfoList(new ArrayList<>());
             Assert.assertEquals(resultList.size(), 0);
         }
 
         @Test
-        public void whenListButPatialNullValue() {
+        public void List중_Null인_Value가_있을_경우() {
             List<SupportInfo> requestList = new ArrayList<>();
             requestList.add(null);
             requestList.add(emptySupportInfo);
@@ -155,7 +155,7 @@ public class SupportMapperTest {
         }
 
         @Test
-        public void whenNormalValue() {
+        public void 정상의_경우() {
             List<SupportInfo> requestList = new ArrayList<>();
             requestList.add(normalSupportInfo);
             requestList.add(normalSupportInfo);
@@ -165,23 +165,23 @@ public class SupportMapperTest {
         }
     }
 
-    public class toSupportInfo {
+    public class toSupportInfo메서드_테스트 {
 
         @Test
-        public void whenNullValue() {
+        public void Null일_경우() {
             SupportInfo result = SupportMapper.toSupportInfo(null);
             Assert.assertNull(result);
         }
 
         @Test
-        public void whenEmptyValue() {
+        public void EmptyValue일_경우() {
             SupportInfo result = SupportMapper.toSupportInfo(emptyResultInfo);
             assertThatSupportInfoEntry(result)
                 .isAllEmptyValue();
         }
 
         @Test
-        public void whenRegionIsNullValue() {
+        public void Region값이_Null일_경우() {
             SupportInfo result = SupportMapper.toSupportInfo(regionIsNullResultInfo);
             assertThatSupportInfoEntry(result)
                 .hasNoRegion()
@@ -198,7 +198,7 @@ public class SupportMapperTest {
         }
 
         @Test
-        public void whenNormalValue() {
+        public void 정상의_경우() {
             SupportInfo result = SupportMapper.toSupportInfo(normalResultInfo);
             assertThatSupportInfoEntry(result)
                 .hasRegion(REGION)
@@ -215,22 +215,22 @@ public class SupportMapperTest {
         }
     }
 
-    public class toSupportInfoList {
+    public class toSupportInfoList메서드_테스트 {
 
         @Test
-        public void whenNullValue() {
+        public void Null일_경우() {
             List<SupportInfo> resultList = SupportMapper.toSupportInfoList(null);
             Assert.assertEquals(resultList.size(), 0);
         }
 
         @Test
-        public void whenEmptyListValue() {
+        public void EmptyList일_경우() {
             List<SupportInfo> resultList = SupportMapper.toSupportInfoList(new ArrayList<>());
             Assert.assertEquals(resultList.size(), 0);
         }
 
         @Test
-        public void whenListButPatialNullValue() {
+        public void List중_Null인_Value가_있을_경우() {
             List<ResultInfo> requestList = new ArrayList<>();
             requestList.add(null);
             requestList.add(emptyResultInfo);
@@ -240,7 +240,7 @@ public class SupportMapperTest {
         }
 
         @Test
-        public void whenNormalValue() {
+        public void 정상의_경우() {
             List<ResultInfo> requestList = new ArrayList<>();
             requestList.add(normalResultInfo);
             requestList.add(normalResultInfo);

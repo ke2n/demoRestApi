@@ -14,10 +14,10 @@ import org.springframework.util.CollectionUtils;
 
 import com.exam.demoApi.common.Utils;
 import com.exam.demoApi.domain.Region;
-import com.exam.demoApi.domain.ResultInfo;
 import com.exam.demoApi.domain.SupportInfo;
 import com.exam.demoApi.exception.CustomException;
 import com.exam.demoApi.mapper.SupportMapper;
+import com.exam.demoApi.model.ResultInfo;
 import com.exam.demoApi.repository.RegionRepository;
 import com.exam.demoApi.repository.SupportInfoRepository;
 
@@ -28,6 +28,9 @@ import static com.exam.demoApi.exception.ExceptionCode.NOT_FOUND_DATA;
 import static com.exam.demoApi.exception.ExceptionCode.NOT_FOUND_REGION;
 import static com.exam.demoApi.exception.ExceptionCode.NOT_FOUND_SUPPORT_ID;
 
+/**
+ * @author yunsung Kim
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor

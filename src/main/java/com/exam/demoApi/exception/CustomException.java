@@ -1,12 +1,10 @@
-/*
- * Copyright (c) 2018. 10. 30.
- * Yunsung Kim
- */
-
 package com.exam.demoApi.exception;
 
 import lombok.Getter;
 
+/**
+ * @author yunsung Kim
+ */
 @Getter
 public class CustomException extends RuntimeException {
 
@@ -14,6 +12,11 @@ public class CustomException extends RuntimeException {
 
     public CustomException(ExceptionCode resultCode) {
         super(resultCode.getMsg());
+        this.resultCode = resultCode;
+    }
+
+    public CustomException(ExceptionCode resultCode, String additionalString) {
+        super(resultCode.getMsg() + additionalString);
         this.resultCode = resultCode;
     }
 }
