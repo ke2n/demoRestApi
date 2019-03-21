@@ -11,7 +11,7 @@
 
 
 ### CSV레코드를_데이터베이스에_저장
-POST http://localhost:8080/data/upload
+POST http://localhost:8088/data/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -22,14 +22,14 @@ Content-Disposition: form-data; name="file"; filename="test.csv"
 
 
 
-### 지자체정보_목록출력
-GET http://localhost:8080/info/list
+### 지원하는 지자체정보 목록출력
+GET http://localhost:8088/info/list
 Accept: application/json
 
 
 
-### 지자체정보_검색
-POST http://localhost:8080/info/search
+### 지자체정보_입력시 해당 지자체 지원정보 출력
+POST http://localhost:8088/info/search
 Content-Type: application/json
 
 {
@@ -37,8 +37,8 @@ Content-Type: application/json
 }
 
 
-### 지자체정보_수정
-POST http://localhost:8080/info/edit
+### 지원하는 지자체정보 수정
+POST http://localhost:8088/info/edit
 Content-Type: application/json
 
 {
@@ -51,13 +51,13 @@ Content-Type: application/json
 
 
 ### 지원금액으로_내림차순_정렬_출력
-GET http://localhost:8080/info/limits/10
+GET http://localhost:8088/info/limits/10
 Content-Type: application/json
 
 
 
 ### 이차보전비율이_가장_작은_추천기관_출력
-GET http://localhost:8080/info/min-rate-institute
+GET http://localhost:8088/info/min-rate-institute
 Content-Type: application/json
 
 ###

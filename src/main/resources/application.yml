@@ -13,3 +13,9 @@ spring:
     console:
       enabled: true
       path: /h2
+  security:
+    user:
+      name: admin
+      password: test
+server:
+  port: 8088
