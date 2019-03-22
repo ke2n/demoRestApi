@@ -71,9 +71,9 @@ public class SecurityService {
 
             return (String) claims.get("name");
         } catch (ExpiredJwtException exception) {
-            log.info("토큰 만료");
+            log.info("만료된 토큰");
         } catch (JwtException exception) {
-            log.info("토큰 변조");
+            log.info("변조된 토큰");
         }
         throw new CustomException(UNAUTHORIZED_REQUEST);
     }

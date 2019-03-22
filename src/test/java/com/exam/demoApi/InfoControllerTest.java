@@ -18,10 +18,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.exam.demoApi.common.Utils;
 import com.exam.demoApi.controller.InfoController;
 import com.exam.demoApi.exception.CustomException;
+import com.exam.demoApi.interceptor.JwtInterceptor;
+import com.exam.demoApi.interceptor.WebConfig;
 import com.exam.demoApi.model.ResultInfo;
 import com.exam.demoApi.service.SupportInfoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,13 +50,22 @@ public class InfoControllerTest {
     private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
         MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
-    private static final String ROOT_URI = "/info";
+    private static final String ROOT_URI = "/api/info";
 
     @Autowired
     private MockMvc mvc;
 
+    @Autowired
+    private WebApplicationContext wac;
+
     @MockBean
     private SupportInfoService service;
+
+    @MockBean
+    private JwtInterceptor jwtInterceptor;
+
+    @MockBean
+    private WebConfig webConfig;
 
     private List<ResultInfo> expectedList;
 
@@ -68,7 +80,7 @@ public class InfoControllerTest {
 
         defaultResultActions("/list", null)
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("@.status").value(NOT_FOUND_DATA.name()));
+            .andExpect(jsonPath("@.code").value(NOT_FOUND_DATA.name()));
     }
 
     @Test
@@ -88,7 +100,7 @@ public class InfoControllerTest {
             .contentType(APPLICATION_JSON_UTF8))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("@.status").value(FAIL.name()))
+            .andExpect(jsonPath("@.code").value(FAIL.name()))
             .andExpect(jsonPath("@.message").value("Request method 'GET' not supported"));
     }
 
@@ -98,7 +110,7 @@ public class InfoControllerTest {
 
         defaultResultActions("/search", ResultInfo.builder().region("없음").build())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("@.status").value(NOT_FOUND_REGION.name()));
+            .andExpect(jsonPath("@.code").value(NOT_FOUND_REGION.name()));
     }
 
     @Test
@@ -117,7 +129,7 @@ public class InfoControllerTest {
             .contentType(APPLICATION_JSON_UTF8))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("@.status").value(FAIL.name()))
+            .andExpect(jsonPath("@.code").value(FAIL.name()))
             .andExpect(jsonPath("@.message").value("Request method 'GET' not supported"));
     }
 
@@ -127,7 +139,7 @@ public class InfoControllerTest {
 
         defaultResultActions("/edit", ResultInfo.builder().region("없음").build())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("@.status").value(NOT_FOUND_REGION.name()));
+            .andExpect(jsonPath("@.code").value(NOT_FOUND_REGION.name()));
     }
 
     @Test
@@ -146,7 +158,7 @@ public class InfoControllerTest {
 
         defaultResultActions("/limits/3", null)
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("@.status").value(NOT_FOUND_DATA.name()));
+            .andExpect(jsonPath("@.code").value(NOT_FOUND_DATA.name()));
     }
 
     @Test
@@ -168,7 +180,7 @@ public class InfoControllerTest {
 
         defaultResultActions("/min-rate-institute", null)
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("@.status").value(NOT_FOUND_DATA.name()));
+            .andExpect(jsonPath("@.code").value(NOT_FOUND_DATA.name()));
     }
 
     @Test

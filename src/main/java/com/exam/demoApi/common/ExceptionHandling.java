@@ -21,7 +21,7 @@ public class ExceptionHandling {
     @ExceptionHandler
     protected DefaultInfo handleError(CustomException e) {
         return DefaultInfo.builder()
-            .status(e.getResultCode().name())
+            .code(e.getResultCode().name())
             .message(e.getResultCode().getMsg())
             .build();
     }
@@ -30,7 +30,7 @@ public class ExceptionHandling {
     @ExceptionHandler
     protected DefaultInfo handleError(Exception e) {
         return DefaultInfo.builder()
-            .status(ExceptionCode.FAIL.name())
+            .code(ExceptionCode.FAIL.name())
             .message(e.getMessage())
             .build();
     }

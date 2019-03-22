@@ -2,7 +2,6 @@ package com.exam.demoApi.service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -55,8 +54,13 @@ public class SupportInfoService {
     }
 
     private SupportInfo findSupportInfoByRegionName(String regionName) {
-        Optional<Region> result = regionRepository.findByRegionName(regionName);
-        Region region = result.orElseThrow(() -> new CustomException(NOT_FOUND_REGION));
+        List<Region> result = regionRepository.findByRegionName(regionName);
+
+        if (CollectionUtils.isEmpty(result)) {
+            throw new CustomException(NOT_FOUND_REGION);
+        }
+
+        Region region = result.get(0);
         return supportInfoRepository.findByRegion(region)
             .orElseThrow(() -> new CustomException(NOT_FOUND_SUPPORT_ID));
     }

@@ -2,6 +2,7 @@ package com.exam.demoApi;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -203,7 +204,7 @@ public class SupportInfoServiceTest {
 
         @Test
         public void findByRegionName에서_결과값을_찾을_수_없을때() {
-            given(regionRepository.findByRegionName(REGION)).willReturn(Optional.empty());
+            given(regionRepository.findByRegionName(REGION)).willReturn(new ArrayList<>());
             given(repository.findByRegion(any(Region.class))).willReturn(Optional.empty());
 
             ResultInfo resultInfo = ResultInfo.builder().region(REGION).build();
@@ -217,7 +218,7 @@ public class SupportInfoServiceTest {
 
         @Test
         public void findByRegion에서_결과값을_찾을_수_없을때() {
-            given(regionRepository.findByRegionName(REGION)).willReturn(Optional.of(new Region(REGION)));
+            given(regionRepository.findByRegionName(REGION)).willReturn(Collections.singletonList(new Region(REGION)));
             given(repository.findByRegion(any(Region.class))).willReturn(Optional.empty());
 
             ResultInfo resultInfo = ResultInfo.builder().region(REGION).build();
@@ -230,7 +231,7 @@ public class SupportInfoServiceTest {
 
         @Test
         public void 결과값이나오고_LIMIT와_RATE값이_포함되어_수정됐을때() {
-            given(regionRepository.findByRegionName(REGION)).willReturn(Optional.of(new Region(REGION)));
+            given(regionRepository.findByRegionName(REGION)).willReturn(Collections.singletonList(new Region(REGION)));
             given(repository.findByRegion(any(Region.class))).willReturn(Optional.of(normalSupportInfo));
 
             String EDITED_INSTITUTE = "기관 수정";
@@ -281,7 +282,7 @@ public class SupportInfoServiceTest {
 
         @Test
         public void findByRegionName에서_결과값을_찾을_수_없을때() {
-            given(regionRepository.findByRegionName(REGION)).willReturn(Optional.empty());
+            given(regionRepository.findByRegionName(REGION)).willReturn(new ArrayList<>());
             given(repository.findByRegion(any(Region.class))).willReturn(Optional.empty());
 
             ResultInfo resultInfo = ResultInfo.builder().region(REGION).build();
@@ -295,7 +296,7 @@ public class SupportInfoServiceTest {
 
         @Test
         public void findByRegion에서_결과값을_찾을_수_없을때() {
-            given(regionRepository.findByRegionName(REGION)).willReturn(Optional.of(new Region(REGION)));
+            given(regionRepository.findByRegionName(REGION)).willReturn(Collections.singletonList(new Region(REGION)));
             given(repository.findByRegion(any(Region.class))).willReturn(Optional.empty());
 
             ResultInfo resultInfo = ResultInfo.builder().region(REGION).build();
@@ -308,7 +309,7 @@ public class SupportInfoServiceTest {
 
         @Test
         public void 결과값이_모두_나왔을때() {
-            given(regionRepository.findByRegionName(REGION)).willReturn(Optional.of(new Region(REGION)));
+            given(regionRepository.findByRegionName(REGION)).willReturn(Collections.singletonList(new Region(REGION)));
             given(repository.findByRegion(any(Region.class))).willReturn(Optional.of(normalSupportInfo));
 
             ResultInfo requestInfo = ResultInfo.builder()

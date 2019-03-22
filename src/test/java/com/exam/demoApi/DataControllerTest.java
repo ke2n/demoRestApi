@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.exam.demoApi.common.Utils;
 import com.exam.demoApi.controller.DataController;
 import com.exam.demoApi.exception.CustomException;
+import com.exam.demoApi.interceptor.JwtInterceptor;
+import com.exam.demoApi.interceptor.WebConfig;
 import com.exam.demoApi.model.ResultInfo;
 import com.exam.demoApi.service.DataService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,13 +42,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EnableSpringDataWebSupport
 public class DataControllerTest {
 
-    private static final String ROOT_URI = "/data";
+    private static final String ROOT_URI = "/api/data";
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
     private DataService service;
+
+    @MockBean
+    private JwtInterceptor jwtInterceptor;
+
+    @MockBean
+    private WebConfig webConfig;
 
     private List<ResultInfo> expectedList;
 
@@ -67,7 +75,7 @@ public class DataControllerTest {
 
         defaultResultActions("/upload", cvsFile)
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("@.status").value(ONLY_SUPPORT_UTF8.name()));
+            .andExpect(jsonPath("@.code").value(ONLY_SUPPORT_UTF8.name()));
     }
 
     @Test
