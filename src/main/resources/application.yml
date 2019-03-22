@@ -12,10 +12,10 @@ spring:
   h2:
     console:
       enabled: true
-      path: /h2
+      path: /console
   security:
     user:
       name: admin
       password: test
 server:
-  port: 8088
+  port: 9876

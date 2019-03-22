@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @Slf4j
-@RequestMapping("/info")
+@RequestMapping("/api/info")
 @RequiredArgsConstructor
 public class InfoController {
 

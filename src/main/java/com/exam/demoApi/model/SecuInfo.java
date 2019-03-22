@@ -4,17 +4,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
 /**
  * @author yunsung Kim
  */
-@JsonInclude(Include.NON_NULL)
+@Data
 @Builder
-@Getter
-public class DefaultInfo {
+@JsonInclude(Include.NON_NULL)
+public class SecuInfo {
 
-    String code;
-
-    String message;
+    private String accessToken;
 }

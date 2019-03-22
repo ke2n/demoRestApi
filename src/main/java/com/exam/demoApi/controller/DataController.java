@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
  * @author yunsung Kim
  */
 @RestController
-@RequestMapping("/data")
+@RequestMapping("/api/data")
 @RequiredArgsConstructor
 public class DataController {
 
