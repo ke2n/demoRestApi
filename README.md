@@ -64,7 +64,7 @@ mvn package
 java -jar target/demoApi-0.0.1-SNAPSHOT.jar
 ```
 ### 주요 URL정리
-```
+```curl
 (만기일 2029년 토큰을 테스트용도로 만들어 놓았으니,
 해당 토큰을 사용하시면 손쉽게 조회 가능합니다)
 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdFVzZXIiLCJleHAiOjE4Njg5NDYzMjcsImRlc2MiOiLthYzsiqTtirjsmqkgRGVtb0FwaeyXkOyEnCDrsJztlokifQ.r8RLJgRVvUyf1TecScqJMQPF_JMTF0vYFHDkE9_uPjI
