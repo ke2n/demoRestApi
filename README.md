@@ -63,8 +63,13 @@ mvn package
 서버 기동(9876 port)
 java -jar target/demoApi-0.0.1-SNAPSHOT.jar
 ```
-### 주요 URL
+### 주요 URL정리
 ```
+(만기일 2029년 토큰을 테스트용도로 만들어 놓았으니,
+해당 토큰을 사용하시면 손쉽게 조회 가능합니다)
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdFVzZXIiLCJleHAiOjE4Njg5NDYzMjcsImRlc2MiOiLthYzsiqTtirjsmqkgRGVtb0FwaeyXkOyEnCDrsJztlokifQ.r8RLJgRVvUyf1TecScqJMQPF_JMTF0vYFHDkE9_uPjI
+
+
 ## 계정생성
 curl -X POST \
   http://localhost:9876/api/auth/signup \
@@ -90,7 +95,7 @@ curl -X POST \
 ## 토큰 재발급
 curl -X POST \
   http://localhost:9876/api/auth/refresh \
-  -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzI2ODU2MSwiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9._URhfYHAK_PO4aa0jaF0OKimFfsK9IvytvqzEewABbE' \
+  -H 'Authorization: Bearer JWT_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache'
   
@@ -98,16 +103,16 @@ curl -X POST \
 ## CSV레코드를 데이터베이스에 저장
 curl -X POST \
   http://localhost:9876/api/data/upload \
-  -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzI3MzA1NywiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.sJY-9_Pm8ulNIBt1Go3gHXnbxkNpCSxBlv3YdoD1OZY' \
+  -H 'Authorization: Bearer JWT_TOKEN' \
   -H 'cache-control: no-cache' \
-  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -H 'content-type: multipart/form-data; 
   -F file=@/filePath/test.csv
   
   
 ## 지자체정보 목록출력
 curl -X GET \
   http://localhost:9876/api/info/list \
-  -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzI3MzA1NywiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.sJY-9_Pm8ulNIBt1Go3gHXnbxkNpCSxBlv3YdoD1OZY' \
+  -H 'Authorization: Bearer JWT_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache'
   
@@ -115,7 +120,7 @@ curl -X GET \
 ## 지자체정보 특정 지자체정보 검색
 curl -X POST \
   http://localhost:9876/api/info/search \
-  -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzI3MzA1NywiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.sJY-9_Pm8ulNIBt1Go3gHXnbxkNpCSxBlv3YdoD1OZY' \
+  -H 'Authorization: Bearer JWT_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '{
@@ -126,7 +131,7 @@ curl -X POST \
 ## 지자체정보 수정
 curl -X POST \
   http://localhost:9876/api/info/edit \
-  -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzI3MzA1NywiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.sJY-9_Pm8ulNIBt1Go3gHXnbxkNpCSxBlv3YdoD1OZY' \
+  -H 'Authorization: Bearer JWT_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '{
@@ -141,7 +146,7 @@ curl -X POST \
 ## 지원금액으로 내림차순 정렬 출력(K개)
 curl -X GET \
   http://localhost:9876/api/info/limits/10 \
-  -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzI3MzA1NywiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.sJY-9_Pm8ulNIBt1Go3gHXnbxkNpCSxBlv3YdoD1OZY' \
+  -H 'Authorization: Bearer JWT_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache'
   
@@ -149,6 +154,7 @@ curl -X GET \
 ## 이차보전비율이 가장 작은 추천기관 출력
 curl -X GET \
   http://localhost:9876/api/info/min-rate-institute \
+  -H 'Authorization: Bearer JWT_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache'
 ```
