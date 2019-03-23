@@ -14,8 +14,8 @@ import com.exam.demoApi.mapper.SupportMapper;
 import com.exam.demoApi.model.ResultInfo;
 import com.nitorcreations.junit.runners.NestedRunner;
 
-import static com.exam.demoApi.ResultInfoAssert.assertThatResultInfoEntry;
-import static com.exam.demoApi.SupportInfoAssert.assertThatSupportInfoEntry;
+import static com.exam.demoApi.common.ResultInfoAssert.assertThatResultInfoEntry;
+import static com.exam.demoApi.common.SupportInfoAssert.assertThatSupportInfoEntry;
 
 /**
  * {@link SupportMapper}에 대한 단위 테스트

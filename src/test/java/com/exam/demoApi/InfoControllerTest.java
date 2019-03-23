@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.exam.demoApi.common.Utils;
 import com.exam.demoApi.controller.InfoController;
@@ -54,9 +53,6 @@ public class InfoControllerTest {
 
     @Autowired
     private MockMvc mvc;
-
-    @Autowired
-    private WebApplicationContext wac;
 
     @MockBean
     private SupportInfoService service;

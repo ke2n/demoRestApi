@@ -16,7 +16,7 @@ import com.exam.demoApi.repository.SupportInfoRepository;
 import com.exam.demoApi.service.DataService;
 import com.nitorcreations.junit.runners.NestedRunner;
 
-import static com.exam.demoApi.SupportInfoAssert.assertThatSupportInfoEntry;
+import static com.exam.demoApi.common.SupportInfoAssert.assertThatSupportInfoEntry;
 import static info.solidsoft.mockito.java8.AssertionMatcher.assertArg;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;

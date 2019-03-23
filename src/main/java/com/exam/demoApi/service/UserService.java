@@ -11,6 +11,7 @@ import com.exam.demoApi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.exam.demoApi.exception.ExceptionCode.NOT_FOUND_DATA;
 import static com.exam.demoApi.exception.ExceptionCode.NOT_FOUND_USER;
 import static com.exam.demoApi.exception.ExceptionCode.SIGNUP_EXIST_USERNAME;
 import static com.exam.demoApi.exception.ExceptionCode.SIGNUP_REQUIRED_PASSWORD;
@@ -28,10 +29,9 @@ public class UserService {
 
     public User signin(User user) {
 
-        if (StringUtils.isEmpty(user.getUsername())) {
-            throw new CustomException(NOT_FOUND_USER);
-        }
-        if (StringUtils.isEmpty(user.getPassword())) {
+        if (user == null
+            || StringUtils.isEmpty(user.getUsername())
+            || StringUtils.isEmpty(user.getPassword())) {
             throw new CustomException(NOT_FOUND_USER);
         }
 
@@ -47,6 +47,9 @@ public class UserService {
 
     public User signup(User user) {
 
+        if (user == null) {
+            throw new CustomException(NOT_FOUND_DATA);
+        }
         if (StringUtils.isEmpty(user.getUsername())) {
             throw new CustomException(SIGNUP_REQUIRED_USERNAME);
         }
@@ -66,6 +69,10 @@ public class UserService {
     }
 
     public User findByUsername(String username) {
+        if (StringUtils.isEmpty(username)) {
+            throw new CustomException(NOT_FOUND_USER);
+        }
+
         return repository.findByUsername(username)
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
     }

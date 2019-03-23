@@ -1,30 +1,31 @@
-package com.exam.demoApi;
+package com.exam.demoApi.common;
 
 import org.assertj.core.api.AbstractAssert;
 
-import com.exam.demoApi.model.ResultInfo;
+import com.exam.demoApi.domain.Region;
+import com.exam.demoApi.domain.SupportInfo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * {@link ResultInfo}에 대한 assert 조건 정의
+ * {@link SupportInfo}에 대한 assert 조건 정의
  * @author yunsung Kim
  */
-final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo> {
+public final class SupportInfoAssert extends AbstractAssert<SupportInfoAssert, SupportInfo> {
 
-    private ResultInfoAssert(ResultInfo actual) {
-        super(actual, ResultInfoAssert.class);
+    private SupportInfoAssert(SupportInfo actual) {
+        super(actual, SupportInfoAssert.class);
     }
 
-    static ResultInfoAssert assertThatResultInfoEntry(ResultInfo actual) {
-        return new ResultInfoAssert(actual);
+    public static SupportInfoAssert assertThatSupportInfoEntry(SupportInfo actual) {
+        return new SupportInfoAssert(actual);
     }
 
-    ResultInfoAssert hasRegion(String expectedRegion) {
+    public SupportInfoAssert hasRegion(String strRegion) {
         isNotNull();
-
-        String actualRegion = actual.getRegion();
-        assertThat(actualRegion)
+        Region expectedRegion = new Region(strRegion);
+        Region actualRegion = actual.getRegion();
+        assertThat(expectedRegion)
             .overridingErrorMessage("Expected region to be <%s> but was <%s>",
                 expectedRegion, actualRegion
             ).isEqualTo(expectedRegion);
@@ -32,7 +33,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasTarget(String expectedTarget) {
+    public SupportInfoAssert hasTarget(String expectedTarget) {
         isNotNull();
 
         String actualTarget = actual.getTarget();
@@ -44,7 +45,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasUsage(String expectedUsage) {
+    public SupportInfoAssert hasUsage(String expectedUsage) {
         isNotNull();
 
         String actualUsage = actual.getUsage();
@@ -56,7 +57,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasLimit(String expectedLimit) {
+    public SupportInfoAssert hasLimit(String expectedLimit) {
         isNotNull();
 
         String actualLimit = actual.getLimit();
@@ -68,7 +69,19 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasRate(String expectedRate) {
+    public SupportInfoAssert hasLimitNum(long expectedLimitNum) {
+        isNotNull();
+
+        Long actualLimitNum = actual.getLimitNum();
+        assertThat(actualLimitNum)
+            .overridingErrorMessage("Expected limitNum to be <%s> but was <%s>",
+                expectedLimitNum, actualLimitNum
+            ).isEqualTo(expectedLimitNum);
+
+        return this;
+    }
+
+    public SupportInfoAssert hasRate(String expectedRate) {
         isNotNull();
 
         String actualRate = actual.getRate();
@@ -80,7 +93,31 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasInstitute(String expectedInstitute) {
+    public SupportInfoAssert hasMinRate(Double expectedMinRate) {
+        isNotNull();
+
+        Double actualMinRate = actual.getMinRate();
+        assertThat(actualMinRate)
+            .overridingErrorMessage("Expected minRate to be <%s> but was <%s>",
+                expectedMinRate, actualMinRate
+            ).isEqualTo(expectedMinRate);
+
+        return this;
+    }
+
+    public SupportInfoAssert hasAvgRate(Double expectedAvgRate) {
+        isNotNull();
+
+        Double actualAvgRate = actual.getAvgRate();
+        assertThat(actualAvgRate)
+            .overridingErrorMessage("Expected avgRate to be <%s> but was <%s>",
+                expectedAvgRate, actualAvgRate
+            ).isEqualTo(expectedAvgRate);
+
+        return this;
+    }
+
+    public SupportInfoAssert hasInstitute(String expectedInstitute) {
         isNotNull();
 
         String actualInstitute = actual.getInstitute();
@@ -92,7 +129,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasMgmt(String expectedMgmt) {
+    public SupportInfoAssert hasMgmt(String expectedMgmt) {
         isNotNull();
 
         String actualMgmt = actual.getMgmt();
@@ -104,7 +141,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasReception(String expectedReception) {
+    public SupportInfoAssert hasReception(String expectedReception) {
         isNotNull();
 
         String actualReception = actual.getReception();
@@ -116,18 +153,29 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasNoRegion() {
+    public SupportInfoAssert hasNoId() {
         isNotNull();
 
-        String actualRegion = actual.getRegion();
-        assertThat(actualRegion)
-            .overridingErrorMessage("Expected region to be <null> but was <%s>", actualRegion)
+        Integer actualSupportId = actual.getSupportId();
+        assertThat(actualSupportId)
+            .overridingErrorMessage("Expected region to be <null> but was <%s>", actualSupportId)
             .isNull();
 
         return this;
     }
 
-    ResultInfoAssert hasNoTarget() {
+    public SupportInfoAssert hasNoRegion() {
+        isNotNull();
+
+        Region actualRegion = actual.getRegion();
+        assertThat(actualRegion)
+            .overridingErrorMessage("Expected region to be <null> but was <%s>", actualRegion)
+            .isEqualTo(new Region());
+
+        return this;
+    }
+
+    SupportInfoAssert hasNoTarget() {
         isNotNull();
 
         String actualTarget = actual.getTarget();
@@ -138,7 +186,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasNoUsage() {
+    SupportInfoAssert hasNoUsage() {
         isNotNull();
 
         String actualUsage = actual.getUsage();
@@ -149,7 +197,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasNoLimit() {
+    SupportInfoAssert hasNoLimit() {
         isNotNull();
 
         String actualLimit = actual.getLimit();
@@ -160,7 +208,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasNoRate() {
+    SupportInfoAssert hasNoRate() {
         isNotNull();
 
         String actualRate = actual.getRate();
@@ -171,7 +219,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasNoInstitute() {
+    SupportInfoAssert hasNoInstitute() {
         isNotNull();
 
         String actualInstitute = actual.getInstitute();
@@ -182,7 +230,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasNoMgmt() {
+    SupportInfoAssert hasNoMgmt() {
         isNotNull();
 
         String actualMgmt = actual.getMgmt();
@@ -193,7 +241,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert hasNoReception() {
+    SupportInfoAssert hasNoReception() {
         isNotNull();
 
         String actualReception = actual.getReception();
@@ -204,7 +252,7 @@ final class ResultInfoAssert extends AbstractAssert<ResultInfoAssert, ResultInfo
         return this;
     }
 
-    ResultInfoAssert isAllEmptyValue() {
+    public SupportInfoAssert isAllEmptyValue() {
         hasNoRegion();
         hasNoTarget();
         hasNoUsage();

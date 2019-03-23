@@ -22,8 +22,8 @@ import com.exam.demoApi.repository.SupportInfoRepository;
 import com.exam.demoApi.service.SupportInfoService;
 import com.nitorcreations.junit.runners.NestedRunner;
 
-import static com.exam.demoApi.ResultInfoAssert.assertThatResultInfoEntry;
-import static com.exam.demoApi.SupportInfoAssert.assertThatSupportInfoEntry;
+import static com.exam.demoApi.common.ResultInfoAssert.assertThatResultInfoEntry;
+import static com.exam.demoApi.common.SupportInfoAssert.assertThatSupportInfoEntry;
 import static com.exam.demoApi.exception.ExceptionCode.NOT_FOUND_DATA;
 import static com.exam.demoApi.exception.ExceptionCode.NOT_FOUND_REGION;
 import static com.exam.demoApi.exception.ExceptionCode.NOT_FOUND_SUPPORT_ID;

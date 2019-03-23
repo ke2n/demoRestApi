@@ -7,6 +7,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.exam.demoApi.domain.User;
@@ -20,6 +21,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.exam.demoApi.exception.ExceptionCode.NOT_FOUND_DATA;
 import static com.exam.demoApi.exception.ExceptionCode.UNAUTHORIZED_REQUEST;
 
 /**
@@ -29,13 +31,17 @@ import static com.exam.demoApi.exception.ExceptionCode.UNAUTHORIZED_REQUEST;
 @Slf4j
 public class SecurityService {
 
-    private static final String secretKey = "test_secret_key";
     private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
     private static final int TOKEN_EXPIRE_MINUTES = 60;
+    private static final String SECRET_KEY = "test_secret_key";
     private static final String HEADER_AUTH = "Authorization";
     private static final String HEADER_INC = "Bearer ";
 
     public String createUserKey(User user) {
+        if (user == null || StringUtils.isEmpty(user.getUsername())) {
+            throw new CustomException(NOT_FOUND_DATA);
+        }
+
         Map<String, Object> map = new HashMap<>();
         map.put("name", user.getUsername());
         map.put("desc", "테스트용 DemoApi에서 발행");
@@ -43,27 +49,14 @@ public class SecurityService {
         return generateJWT(map);
     }
 
-    private String generateJWT(Map<String, Object> claimsMap) {
-        Date expireTime = new Date();
-        expireTime.setTime(expireTime.getTime() + 1000 * 60 * TOKEN_EXPIRE_MINUTES);
-
-        Map<String, Object> headerMap = new HashMap<>();
-        headerMap.put("typ", "JWT");
-        headerMap.put("alg", "HS256");
-
-        JwtBuilder builder = Jwts.builder().setHeader(headerMap)
-            .setClaims(claimsMap)
-            .setExpiration(expireTime)
-            .signWith(signatureAlgorithm, new SecretKeySpec(
-                DatatypeConverter.parseBase64Binary(secretKey), signatureAlgorithm.getJcaName()));
-
-        return builder.compact();
-    }
-
     public String getNameFromToken(String jwt) {
+        if (StringUtils.isEmpty(jwt)) {
+            throw new CustomException(NOT_FOUND_DATA);
+        }
+
         try {
             Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
+                .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
                 .parseClaimsJws(jwt).getBody();
 
             log.info("expireTime :" + claims.getExpiration());
@@ -79,6 +72,10 @@ public class SecurityService {
     }
 
     public String getTokenFromRequest(HttpServletRequest request) {
+        if (request == null) {
+            return StringUtils.EMPTY;
+        }
+
         final String authHeader = request.getHeader(HEADER_AUTH);
         if (authHeader == null || !authHeader.startsWith(HEADER_INC)) {
             throw new CustomException(UNAUTHORIZED_REQUEST);
@@ -86,5 +83,22 @@ public class SecurityService {
 
         return authHeader.substring(HEADER_INC.length());
 
+    }
+
+    private String generateJWT(Map<String, Object> claimsMap) {
+        Date expireTime = new Date();
+        expireTime.setTime(expireTime.getTime() + 1000 * 60 * TOKEN_EXPIRE_MINUTES);
+
+        Map<String, Object> headerMap = new HashMap<>();
+        headerMap.put("typ", "JWT");
+        headerMap.put("alg", "HS256");
+
+        JwtBuilder builder = Jwts.builder().setHeader(headerMap)
+            .setClaims(claimsMap)
+            .setExpiration(expireTime)
+            .signWith(signatureAlgorithm, new SecretKeySpec(
+                DatatypeConverter.parseBase64Binary(SECRET_KEY), signatureAlgorithm.getJcaName()));
+
+        return builder.compact();
     }
 }
