@@ -56,7 +56,8 @@
 ## 빌드 및 실행방법
 ```javascript
 빌드 수행 
-mvn package
+cd ${RootPath}
+mvn package (또는 ./mvnw package)
 
 서버 기동(9876 port)
 java -jar target/demoApi-0.0.1-SNAPSHOT.jar
