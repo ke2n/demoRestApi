@@ -8,23 +8,6 @@
 `JPA` `H2` `lombok` `jbcrypt` `JWT`
 `jackson-dataformat-csv`
 
-### 디렉토리 구조 세부설명
-- com.exam.demoApi
-    - common : exception Handler 및 유틸성 클래스
-    - controller :
-        - DataController(/api/data/*) : CSV파일 DB에 저장하는 Controller
-        - InfoController(/api/info/*) : 조회, 검색, 수정등의 기능수행 Controller
-        - SecurityController(/api/auth/*) : 계정생성, 로그인, 토큰 발급 기능수행 Controller
-    - domain : JPA Entity 클래스(Region, SupportInfo, User)
-    - exception : 커스텀 예외처리 클래스 및 예외처리 코드
-    - interceptor : Header에 Authorization 확인 및 검증 interceptor 클래스
-    - mapper : JPA Entity 클래스와 Model간의 컨버팅 클래스
-    - model : Model 클래스
-    - repository : JPA repository 클래스
-    - service : service 클래스
-- resources : property 및 csv 파일
-- test : 테스트 수행 클래스
-
 ## 문제해결
 - `요구사항` - 데이터 파일에서 각 레코드를 데이터베이스에 저장하는 API 개발
     - 서비스 운영 측면에서 CSV파일을 저장하는 기능은 batch성 업무로 판단되어 컨트롤러를 분리하였습니다. 실 운영시에는 해당 기능 수행에 대한 별도의 batch 테이블을 두어 일반적인 조회성 업무에 영향이 없어야 것 입니다.
@@ -53,6 +36,23 @@
     - 인터셉터를 사용하여 헤더에 Bearer Token이 존재하지 않으면 Exception을 발생 하도록 하였고, signup/signin 요청시 특정 secretKey로 서명된 JWT생성 되도록 하였습니다.
     - Bcrypt 해싱함수를 사용하여 DB에 암호화된 패스워드가 저장되도록 하였습니다.
     
+### 디렉토리 구조 세부설명
+- com.exam.demoApi
+    - common : exception Handler 및 유틸성 클래스
+    - controller :
+        - DataController(/api/data/*) : CSV파일 DB에 저장하는 Controller
+        - InfoController(/api/info/*) : 조회, 검색, 수정등의 기능수행 Controller
+        - SecurityController(/api/auth/*) : 계정생성, 로그인, 토큰 발급 기능수행 Controller
+    - domain : JPA Entity 클래스(Region, SupportInfo, User)
+    - exception : 커스텀 예외처리 클래스 및 예외처리 코드
+    - interceptor : Header에 Authorization 확인 및 검증 interceptor 클래스
+    - mapper : JPA Entity 클래스와 Model간의 컨버팅 클래스
+    - model : Model 클래스
+    - repository : JPA repository 클래스
+    - service : service 클래스
+- resources : property 및 csv 파일
+- test : 테스트 수행 클래스
+
 ## 빌드 및 실행방법
 ```javascript
 빌드 수행 
@@ -81,7 +81,7 @@ curl -X POST \
 
 ## 로그인
 curl -X POST \
-  http://localhost:9876/api/auth/signin \
+  http://localhost:976/api/auth/signin \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '{
