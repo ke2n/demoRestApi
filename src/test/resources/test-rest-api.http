@@ -9,9 +9,41 @@
 # @author : yunsung Kim
 # @since : 2019.03.25
 
+### 회원가입
+POST http://localhost:9876/api/auth/signup
+Content-Type: application/json
+cache-control: no-cache
+
+{
+  "username": "test@test.com",
+  "password": "test1234"
+}
+
+
+
+### 로그인
+POST http://localhost:9876/api/auth/signin
+Content-Type: application/json
+cache-control: no-cache
+
+{
+  "username": "test@test.com",
+  "password": "test1234"
+}
+
+
+
+### 토큰 갱신
+POST http://localhost:9876/api/auth/refresh
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzQxMjM1MCwiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.WMfAZAp57kpXaPcOPhuguPnQNKTosf3pEXcVjTzIylU
+Content-Type: application/json
+cache-control: no-cache
+
+
 
 ### CSV레코드를_데이터베이스에_저장
 POST http://localhost:9876/api/data/upload
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzQxMjM1MCwiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.WMfAZAp57kpXaPcOPhuguPnQNKTosf3pEXcVjTzIylU
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -24,12 +56,14 @@ Content-Disposition: form-data; name="file"; filename="test.csv"
 
 ### 지원하는 지자체정보 목록출력
 GET http://localhost:9876/api/info/list
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzQxMjM1MCwiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.WMfAZAp57kpXaPcOPhuguPnQNKTosf3pEXcVjTzIylU
 Accept: application/json
 
 
 
 ### 지자체정보_입력시 해당 지자체 지원정보 출력
 POST http://localhost:9876/api/info/search
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzQxMjM1MCwiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.WMfAZAp57kpXaPcOPhuguPnQNKTosf3pEXcVjTzIylU
 Content-Type: application/json
 
 {
@@ -39,6 +73,7 @@ Content-Type: application/json
 
 ### 지원하는 지자체정보 수정
 POST http://localhost:9876/api/info/edit
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzQxMjM1MCwiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.WMfAZAp57kpXaPcOPhuguPnQNKTosf3pEXcVjTzIylU
 Content-Type: application/json
 
 {
@@ -52,12 +87,14 @@ Content-Type: application/json
 
 ### 지원금액으로_내림차순_정렬_출력
 GET http://localhost:9876/api/info/limits/10
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzQxMjM1MCwiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.WMfAZAp57kpXaPcOPhuguPnQNKTosf3pEXcVjTzIylU
 Content-Type: application/json
 
 
 
 ### 이차보전비율이_가장_작은_추천기관_출력
 GET http://localhost:9876/api/info/min-rate-institute
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoic3ZsYWRhQGdtYWlsLmNvbSIsImV4cCI6MTU1MzQxMjM1MCwiZGVzYyI6Iu2FjOyKpO2KuOyaqSBEZW1vQXBp7JeQ7IScIOuwnO2WiSJ9.WMfAZAp57kpXaPcOPhuguPnQNKTosf3pEXcVjTzIylU
 Content-Type: application/json
 
 ###
