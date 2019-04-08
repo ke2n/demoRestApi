@@ -2,7 +2,6 @@ package com.exam.demoApi.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,18 +12,19 @@ import com.exam.demoApi.model.SecuInfo;
 import com.exam.demoApi.service.SecurityService;
 import com.exam.demoApi.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * @author yunsung Kim
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class SecurityController {
 
-    @Autowired
-    private SecurityService securityService;
+    private final SecurityService securityService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping("/signin")
     public SecuInfo signin(@RequestBody User user) {
